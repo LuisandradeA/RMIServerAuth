@@ -22,7 +22,7 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 	
 		//percorrer lista de usuarios para checar se usuario ja existe
 		for(MyUser item : usuarios){
-			if(item.getUsername() == u.getUsername()){
+			if(item.getUsername().equals(u.getUsername())){
 				return "Este Username ja existe! por favor escolha outro";
 			}
 		}
@@ -44,7 +44,7 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 		for(MyUser item : usuarios){
 			
 			//checa se username existe
-			if(item.getUsername() == u.getUsername()){
+			if(item.getUsername().equals(u.getUsername())){
 				//checa se password eh igual
 				if(item.getPassword().equals(u.getPassword())){
 					return "Usuario " + u.getUsername() + " logado com sucesso";
