@@ -1,12 +1,21 @@
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Auth extends UnicastRemoteObject implements IAuth{
 	
+	private Path log_file;
 	
 	protected Auth() throws RemoteException {
 		super();
+		log_file = Paths.get("log.txt");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -14,8 +23,11 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 	
 	
 	@Override
-	public String cadastrar(String username, String password) throws RemoteException {
+	public String cadastrar(String username, String password, String ip) throws IOException {
 		// TODO Auto-generated method stub
+		
+		//Chama função para registrar no Log file
+		addLog(username, ip, "Cadastro");
 		
 		//cria objeto MyUser
 		MyUser u = new MyUser(username, password);
@@ -34,8 +46,11 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 	}
 
 	@Override
-	public String login(String username, String password) throws RemoteException {
+	public String login(String username, String password, String ip) throws IOException {
 		// TODO Auto-generated method stub
+		
+		//Chama função para registrar no Log file
+		addLog(username, ip, "Login");
 		
 		//cria objeto MyUser
 		MyUser u = new MyUser(username, password);
@@ -60,7 +75,7 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 	}
 
 	@Override
-	public String gerarLog() throws RemoteException {
+	public String showUsers() throws RemoteException {
 		// TODO Auto-generated method stub
 		String retorno = "";
 		for(MyUser item : usuarios){
@@ -68,6 +83,14 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 		}
 	
 		return retorno;
+	}
+	
+	
+	private void addLog (String username, String ip_adress, String acess_type) throws IOException {
+		List<String> line = Arrays.asList(ip_adress + " _ " + username + " _ " + acess_type);
+		Files.write(this.log_file, line, Charset.forName("UTF-8"));
+		
+		
 	}
 	
 }
