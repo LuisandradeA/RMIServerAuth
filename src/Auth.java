@@ -3,6 +3,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 	
 	private void addLog (String username, String ip_adress, String acess_type) throws IOException {
 		List<String> line = Arrays.asList(ip_adress + " _ " + username + " _ " + acess_type);
-		Files.write(this.log_file, line, Charset.forName("UTF-8"));
+		Files.write(this.log_file, line,StandardOpenOption.APPEND);
 		
 		
 	}
