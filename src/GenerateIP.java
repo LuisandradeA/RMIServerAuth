@@ -1,5 +1,7 @@
 
 public class GenerateIP {
+	
+	/* Gera um IP aleatório para o cliente */ 
 	public String GenerateRandomIP () {
 		int p1, p2, p3, p4;
 		

@@ -16,13 +16,16 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 	
 	protected Auth() throws RemoteException {
 		super();
+		//Endereço do log_file
 		log_file = Paths.get("log.txt");
 		// TODO Auto-generated constructor stub
 	}
 
+	//Lista de usuarios cadastrados
 	private ArrayList<MyUser> usuarios = new ArrayList();
 	
 	
+	/* Metodo para requisicoes de cadastro */
 	@Override
 	public String cadastrar(String username, String password, String ip) throws IOException {
 		// TODO Auto-generated method stub
@@ -46,6 +49,7 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 		
 	}
 
+	/* Metodo para requisicoes de login */
 	@Override
 	public String login(String username, String password, String ip) throws IOException {
 		// TODO Auto-generated method stub
@@ -75,6 +79,7 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 		return "Usuario nao esta cadastrado. Por favor, cadastre-se primeiro.";
 	}
 
+	/* Metodo para listar usuarios cadastrados */
 	@Override
 	public String showUsers() throws RemoteException {
 		// TODO Auto-generated method stub
@@ -86,12 +91,9 @@ public class Auth extends UnicastRemoteObject implements IAuth{
 		return retorno;
 	}
 	
-	
+	/* Metodo para gerar log de requisicao no log_file */ 
 	private void addLog (String username, String ip_adress, String acess_type) throws IOException {
 		List<String> line = Arrays.asList(ip_adress + " _ " + username + " _ " + acess_type);
-		Files.write(this.log_file, line,StandardOpenOption.APPEND);
-		
-		
+		Files.write(this.log_file, line,StandardOpenOption.APPEND);	
 	}
-	
 }
